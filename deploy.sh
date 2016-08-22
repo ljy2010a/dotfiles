@@ -4,25 +4,37 @@
 install(){
 	
 	rm -rf ~/.vim/bundle/vundle
-	rm ~/.vim/bundle/snipmate.vim/snippets/ -r
+	rm -rf ~/.vim/bundle/snipmate.vim/snippets/ 
 
 	git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-	ln -s $(PWD)/vimrc ~/.vimrc	
-	ln -s $(PWD)/zshrc ~/.zshrc
-	ln -s $(PWD)/tmux.conf ~/.tmux.conf
-	ln -s $(PWD)/bash_profile ~/.bashrc
-	ln -s $(PWD)/gvimrc ~/.gvimrc
 
-	cp snippets/ ~/.vim/bundle/snipmate.vim/ -r
+	ln -s $(pwd)/vimrc ~/.vimrc	
+	ln -s $(pwd)/zshrc ~/.zshrc
+	ln -s $(pwd)/tmux.conf ~/.tmux.conf
+	ln -s $(pwd)/bash_profile ~/.bashrc
+	ln -s $(pwd)/gvimrc ~/.gvimrc
+
+	cp -r snippets/ ~/.vim/bundle/snipmate.vim/ 
 	vim +BundleInstall +BundleClean! +qa
 }
 
 backup(){
-
+	echo "backup"
+	mkdir backup
+	mv ~/.vimrc backup/
+	mv ~/.zshrc backup/
+	mv ~/.tmux.conf backup/
+	mv ~/.bashrc backup/
+	mv ~/.gvimrc backup/
 }
 
 clean(){
-
+	echo "clean"
+	rm ~/.vimrc 
+	rm ~/.zshrc 
+	rm ~/.tmux.conf
+	rm ~/.bashrc 
+	rm ~/.gvimrc
 }
 
 case $1 in

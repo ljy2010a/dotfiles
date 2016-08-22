@@ -16,7 +16,7 @@ Plugin 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer' }
 " Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
 Plugin 'plasticboy/vim-markdown'
-
+Plugin 'altercation/vim-colors-solarized'
 
 Plugin 'bling/vim-airline'
 Plugin 'scrooloose/nerdcommenter'
