@@ -13,7 +13,7 @@ Plugin 'fatih/vim-go'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer' }
-" Plugin 'scrooloose/syntastic'
+
 Plugin 'kien/ctrlp.vim'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'altercation/vim-colors-solarized'
@@ -23,6 +23,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
 
+" Plugin 'scrooloose/syntastic'
 " Plugin 'gmarik/vundle'
 " Plugin 'Align'
 " Plugin 'msanders/snipmate.vim'

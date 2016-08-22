@@ -5,6 +5,8 @@ install(){
 	
 	rm -rf ~/.vim/bundle/vundle
 	rm -rf ~/.vim/bundle/snipmate.vim/snippets/ 
+	rm -rf ~/.oh-my-zsh
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 	git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
@@ -16,6 +18,8 @@ install(){
 
 	cp -r snippets/ ~/.vim/bundle/snipmate.vim/ 
 	vim +BundleInstall +BundleClean! +qa
+	vim +GoInstallBinaries +qa
+	# sh ~/.vim/bundle/YouCompleteMe/install.sh --gocode-completer
 }
 
 backup(){
