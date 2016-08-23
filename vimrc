@@ -7,13 +7,12 @@ call vundle#rc()
 
  " let Vundle manage Vundle
  " required! 
- Bundle 'gmarik/vundle'
+Bundle 'gmarik/vundle'
 
 Plugin 'fatih/vim-go'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'SirVer/ultisnips'
-Plugin 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer' }
-
+Plugin 'Shougo/neocomplete'
 Plugin 'kien/ctrlp.vim'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'altercation/vim-colors-solarized'
@@ -32,6 +31,7 @@ Plugin 'majutsushi/tagbar'
 " Plugin 'VundleVim/Vundle.vim'
 " Plugin 'tpope/vim-fugitive'
 " Plugin 'benmills/vimux'
+
 call vundle#end()            
 
 set nocompatible                " Enables us Vim specific features
@@ -73,6 +73,11 @@ set mouse=a
 set wildmenu
 
 
+" neocomplete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 2
+
 " 80 clumn
 " set textwidth=80
 " set wrap
@@ -113,10 +118,10 @@ noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
 
 " Enable to copy to clipboard for operations like yank, delete, change and put
 " http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
-" if has('unnamedplus')
-set clipboard^=unnamed
-set clipboard^=unnamedplus
-" endif
+if has('unnamedplus')
+  set clipboard^=unnamed
+  set clipboard^=unnamedplus
+endif
 
 
 " This enables us to undo files even if you exit Vim.
@@ -176,12 +181,9 @@ autocmd BufEnter * silent! lcd %:p:h
 
 
 autocmd BufRead,BufNewFile *.json set filetype=json
-autocmd BufRead,BufNewFile *.go set   filetype=go
 
 autocmd FileType make set noexpandtab tabstop=4 shiftwidth=4
 autocmd FileType python set tabstop=4 shiftwidth=4
-autocmd FileType go set tabstop=4 shiftwidth=4
-
 
 
 " airline 
@@ -200,15 +202,12 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_enable_highlighting = 0
 let g:syntastic_mode_map = { 'passive_filetypes': ['go'] }
 
-" YCM settings
-let g:ycm_key_list_select_completion = ['', '']
-let g:ycm_key_list_previous_completion = ['']
-let g:ycm_key_invoke_completion = '<C-Space>'
 
 " UltiSnips setting
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
 
 " go
 let g:go_highlight_functions = 1
@@ -278,6 +277,7 @@ augroup go
 
   " :GoDef but opens in a vertical split
   autocmd FileType go nmap <Leader>v <Plug>(go-def-vertical)
+  
   " :GoDef but opens in a horizontal split
   autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
 
@@ -287,6 +287,44 @@ augroup go
   autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
   autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 augroup END
+
+" ==================== UltiSnips ====================
+function! g:UltiSnips_Complete()
+  call UltiSnips#ExpandSnippet()
+  if g:ulti_expand_res == 0
+    if pumvisible()
+      return "\<C-n>"
+    else
+      call UltiSnips#JumpForwards()
+      if g:ulti_jump_forwards_res == 0
+        return "\<TAB>"
+      endif
+    endif
+  endif
+  return ""
+endfunction
+
+function! g:UltiSnips_Reverse()
+  call UltiSnips#JumpBackwards()
+  if g:ulti_jump_backwards_res == 0
+    return "\<C-P>"
+  endif
+
+  return ""
+endfunction
+
+
+if !exists("g:UltiSnipsJumpForwardTrigger")
+  let g:UltiSnipsJumpForwardTrigger = "<tab>"
+endif
+
+if !exists("g:UltiSnipsJumpBackwardTrigger")
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+endif
+
+au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
+
 
 " build_go_files is a custom function that builds or compiles the test file.
 " It calls :GoBuild if its a Go file, or :GoTestCompile if it's a test file
