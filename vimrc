@@ -107,10 +107,10 @@ highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 
 
 " Yank text to the OS X clipboard" 将文本复制到OS X剪贴板中
-" set clipboard=unnamed
-" noremap <leader>y "*y
-" noremap <leader>yy "*Y
-"  
+set clipboard=unnamed
+noremap <leader>y "*y
+noremap <leader>yy "*Y
+  
 "  " Preserve indentation while pasting text from the OS X clipboard 在粘贴OS
 "  X剪贴板中的文本时保留缩进
 noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
@@ -141,8 +141,7 @@ nmap <Right> <c-w>l
 nmap <Left> <c-w>h
 
 " Save
-noremap :w<CR> :w<CR>:GoErrCheck<CR>
-
+nmap <F6> :GoErrCheck<cr>
 nmap <F2> :w<cr>
 " Save all
 nmap <F3> :wa<cr>

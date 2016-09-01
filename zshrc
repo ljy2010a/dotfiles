@@ -5,7 +5,6 @@ export ZSH=~/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-#ZSH_THEME="apple"
 ZSH_THEME="robbyrussell"
 alias vim='mvim -v'
 ulimit -n 1048576
@@ -57,15 +56,16 @@ plugins=(zsh-wakatime autojump git z node brew bundle github osx svn textmate go
 # User configuration
 
 export PATH="/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin"
+
 export ANDROID_HOME="~/android-sdk19"
+export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
+
 export GOPATH="~/go"
 export PATH="$PATH:$GOPATH/bin"
 
-eval "$(docker-machine env default)"
-
-export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
 export DYLD_LIBRARY_PATH="/usr/local/mysql/lib"
 
+eval "$(docker-machine env default)"
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
@@ -92,8 +92,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
 alias sshljy2010a="ssh -i ~/ljy2010a/ljy2010a.pem ubuntu@54.238.210.81"
 alias sshch="python ~/ssh.py"
 alias sshosea="python ~/osea.py"
 alias py="python"
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh

@@ -6,6 +6,10 @@ install(){
 	rm -rf ~/.vim/bundle/vundle
 	rm -rf ~/.vim/bundle/snipmate.vim/snippets/ 
 	rm -rf ~/.oh-my-zsh
+	mkdir -p ~/.tmux/plugins
+	
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 	git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
