@@ -1,47 +1,41 @@
 #!/usr/bin/env bash
 
-
 install(){
 	
-	rm -rf ~/.vim/bundle/vundle
 	rm -rf ~/.vim/bundle/snipmate.vim/snippets/ 
 	rm -rf ~/.oh-my-zsh
+	rm -rf ~/.tmux
+
 	mkdir -p ~/.tmux/plugins
 	
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+	
+	curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-	git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-
+	echo " link dotfiles "
+	
 	ln -s $(pwd)/vimrc ~/.vimrc	
-	ln -s $(pwd)/zshrc ~/.zshrc
 	ln -s $(pwd)/tmux.conf ~/.tmux.conf
-	ln -s $(pwd)/bash_profile ~/.bashrc
 	ln -s $(pwd)/gvimrc ~/.gvimrc
 
-	cp -r snippets/ ~/.vim/bundle/snipmate.vim/ 
-	vim +BundleInstall +BundleClean! +qa
-	vim +GoInstallBinaries +qa
-	# sh ~/.vim/bundle/YouCompleteMe/install.sh --gocode-completer
+	cp -r snippets/ ~/.vim/bundle/snipmate.vim/
+	vim +PlugInstall +PlugClean! +qa
 }
 
 backup(){
 	echo "backup"
 	mkdir backup
 	mv ~/.vimrc backup/
-	mv ~/.zshrc backup/
 	mv ~/.tmux.conf backup/
-	mv ~/.bashrc backup/
 	mv ~/.gvimrc backup/
 }
 
 clean(){
 	echo "clean"
 	rm ~/.vimrc 
-	rm ~/.zshrc 
 	rm ~/.tmux.conf
-	rm ~/.bashrc 
 	rm ~/.gvimrc
 }
 

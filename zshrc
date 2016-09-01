@@ -51,11 +51,11 @@ ulimit -n 1048576
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-wakatime autojump git z node brew bundle github osx svn textmate golang)
+plugins=(autojump git z node brew bundle github osx svn textmate golang)
 
 # User configuration
 
-export PATH="/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 export ANDROID_HOME="~/android-sdk19"
 export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
@@ -67,6 +67,13 @@ export DYLD_LIBRARY_PATH="/usr/local/mysql/lib"
 
 eval "$(docker-machine env default)"
 source $ZSH/oh-my-zsh.sh
+
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+alias sshljy2010a="ssh -i ~/ljy2010a/ljy2010a.pem ubuntu@54.238.210.81"
+alias sshch="python ~/ssh.py"
+alias sshosea="python ~/osea.py"
+alias py="python"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -92,9 +99,4 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
-alias sshljy2010a="ssh -i ~/ljy2010a/ljy2010a.pem ubuntu@54.238.210.81"
-alias sshch="python ~/ssh.py"
-alias sshosea="python ~/osea.py"
-alias py="python"

@@ -10,5 +10,6 @@ alias egrep='egrep --color'
 alias fgrep='fgrep --color'
 
 export ANDROID_HOME="~/android-sdk19"
-export GOPATH="~/go"
 export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
+
+export GOPATH="~/go"

@@ -2,37 +2,34 @@ if exists('$TMUX')
     set term=screen-256color
 endif
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call plug#begin('~/.vim/plugged')
 
- " let Vundle manage Vundle
- " required! 
-Bundle 'gmarik/vundle'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'SirVer/ultisnips'
+Plug 'Shougo/neocomplete'
+Plug 'kien/ctrlp.vim'
+Plug 'plasticboy/vim-markdown'
+Plug 'altercation/vim-colors-solarized'
 
-Plugin 'fatih/vim-go'
-Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'Shougo/neocomplete'
-Plugin 'kien/ctrlp.vim'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'altercation/vim-colors-solarized'
+Plug 'bling/vim-airline'
+Plug 'scrooloose/nerdcommenter'
+let g:NERDSpaceDelims=1
 
-Plugin 'bling/vim-airline'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
 
-" Plugin 'scrooloose/syntastic'
-" Plugin 'gmarik/vundle'
-" Plugin 'Align'
-" Plugin 'msanders/snipmate.vim'
-" Plugin 'slim-template/vim-slim'
-" Plugin 'othree/html5.vim'
-" Plugin 'VundleVim/Vundle.vim'
-" Plugin 'tpope/vim-fugitive'
-" Plugin 'benmills/vimux'
-
-call vundle#end()            
+" Plug 'scrooloose/syntastic'
+" Plug 'gmarik/vundle'
+" Plug 'Align'
+" Plug 'msanders/snipmate.vim'
+" Plug 'slim-template/vim-slim'
+" Plug 'othree/html5.vim'
+" Plug 'VundleVim/Vundle.vim'
+" Plug 'tpope/vim-fugitive'
+" Plug 'benmills/vimux'
+         
+call plug#end()
 
 set nocompatible                " Enables us Vim specific features
 filetype off                    " Reset filetype detection first ...
@@ -50,6 +47,7 @@ set incsearch                   " Shows the match while typing
 set hlsearch                    " Highlight found searches
 set noerrorbells                " No beeps
 set number                      " Show line numbers
+set relativenumber
 set showcmd                     " Show me what I'm typing
 set noswapfile                  " Don't use swapfile
 set nobackup                    " Don't create annoying backup files
@@ -113,7 +111,7 @@ noremap <leader>yy "*Y
   
 "  " Preserve indentation while pasting text from the OS X clipboard 在粘贴OS
 "  X剪贴板中的文本时保留缩进
-noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
+" noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
 
 
 " Enable to copy to clipboard for operations like yank, delete, change and put
@@ -141,7 +139,6 @@ nmap <Right> <c-w>l
 nmap <Left> <c-w>h
 
 " Save
-nmap <F6> :GoErrCheck<cr>
 nmap <F2> :w<cr>
 " Save all
 nmap <F3> :wa<cr>
@@ -154,6 +151,7 @@ nmap <A-down> :lnext<cr>
 nmap <A-right> :ll<cr>
 map <F5> :NERDTreeToggle<CR>
 nmap <F8> :TagbarToggle<CR>
+nmap <F6> :GoMetaLinter<cr>
 
 " Jump to next error with Ctrl-n and previous error with Ctrl-p. Close the
 " quickfix window with <leader>a
@@ -222,16 +220,18 @@ let g:go_highlight_generate_tags = 1
 let g:go_list_height = 5
 let g:go_list_type = "quickfix"
 
-let g:go_autodetect_gopath = 1
+let g:go_autodetect_gopath = 0
 let g:go_auto_type_info = 1
 
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
 
-let g:go_metalinter_autosave = 0
-let g:go_metalinter_enabled = ['errcheck']
-let g:go_metalinter_autosave_enabled = ['errcheck']
+let g:go_metalinter_autosave = 1
+" let g:go_metalinter_enabled = ['errcheck']
+let g:go_metalinter_autosave_enabled = ['varcheck']
+" let g:go_metalinter_autosave_enabled = ['errcheck']
 let g:go_metalinter_deadline = "30s"
+
 
 " Open :GoDeclsDir with ctrl-g
 nmap <C-g> :GoDeclsDir<cr>
@@ -279,6 +279,7 @@ augroup go
   
   " :GoDef but opens in a horizontal split
   autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
+  autocmd FileType go nmap <Leader>dt <Plug>(go-def-tab)
 
   " :GoAlternate  commands :A, :AV, :AS and :AT
   autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
