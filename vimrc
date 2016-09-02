@@ -1,7 +1,3 @@
-if exists('$TMUX')
-    set term=screen-256color
-endif
-
 call plug#begin('~/.vim/plugged')
 
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
@@ -18,6 +14,7 @@ let g:NERDSpaceDelims=1
 
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
+Plug 'rking/ag.vim'
 
 " Plug 'scrooloose/syntastic'
 " Plug 'gmarik/vundle'
@@ -35,9 +32,21 @@ set nocompatible                " Enables us Vim specific features
 filetype off                    " Reset filetype detection first ...
 filetype plugin indent on       " ... and enable filetype detection
 syntax on
-set ttyfast                     " Indicate fast terminal conn for faster redraw
-set ttymouse=xterm2             " Indicate terminal type for mouse codes
-set ttyscroll=3                 " Speedup scrolling
+
+if has('!nvim')
+    if exists('$TMUX')
+      set term=screen-256color
+    endif
+
+  set ttyfast                     " Indicate fast terminal conn for faster redraw
+  set ttymouse=xterm2             " Indicate terminal type for mouse codes
+  set ttyscroll=3                 " Speedup scrolling
+endif
+
+if has('nvim')
+
+endif
+
 set laststatus=2                " Show status line always
 set encoding=utf-8              " Set default encoding to UTF-8
 set autoread                    " Automatically read changed files
@@ -47,7 +56,7 @@ set incsearch                   " Shows the match while typing
 set hlsearch                    " Highlight found searches
 set noerrorbells                " No beeps
 set number                      " Show line numbers
-set relativenumber
+" set relativenumber
 set showcmd                     " Show me what I'm typing
 set noswapfile                  " Don't use swapfile
 set nobackup                    " Don't create annoying backup files
@@ -145,19 +154,20 @@ nmap <F3> :wa<cr>
 " Close
 nmap <F4> :q<cr>
 " Format all
-nmap <F11> gg=G<C-o>
+nmap <F5> :NERDTreeToggle<cr>
+nmap <F8> :TagbarToggle<cr>
+
 nmap <A-up> :lprev<cr>
 nmap <A-down> :lnext<cr>
 nmap <A-right> :ll<cr>
-map <F5> :NERDTreeToggle<CR>
-nmap <F8> :TagbarToggle<CR>
-nmap <F6> :GoMetaLinter<cr>
+
 
 " Jump to next error with Ctrl-n and previous error with Ctrl-p. Close the
 " quickfix window with <leader>a
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
+nnoremap <leader>bb :CtrlPBuffer<CR>
 
 " Visual linewise up and down by default (and use gj gk to go quicker)
 noremap <Up> gk
@@ -178,10 +188,11 @@ autocmd BufEnter * silent! lcd %:p:h
 
 
 autocmd BufRead,BufNewFile *.json set filetype=json
-
 autocmd FileType make set noexpandtab tabstop=4 shiftwidth=4
 autocmd FileType python set tabstop=4 shiftwidth=4
 
+" The Silver Searcher
+let g:ackprg = 'ag --vimgrep'
 
 " airline 
 " let g:airline#extensions#tabline#enabled = 1
@@ -274,11 +285,9 @@ augroup go
   " :GoMetaLinter
   autocmd FileType go nmap <Leader>l <Plug>(go-metalinter)
 
-  " :GoDef but opens in a vertical split
-  autocmd FileType go nmap <Leader>v <Plug>(go-def-vertical)
-  
-  " :GoDef but opens in a horizontal split
-  autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
+  " :GoDef but opens in a vertical, horizontal split
+  autocmd FileType go nmap <Leader>ds <Plug>(go-def-split)
+  autocmd FileType go nmap <Leader>dv <Plug>(go-def-vertical)
   autocmd FileType go nmap <Leader>dt <Plug>(go-def-tab)
 
   " :GoAlternate  commands :A, :AV, :AS and :AT
