@@ -1,31 +1,24 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
-Plug 'Shougo/neocomplete'
-Plug 'kien/ctrlp.vim'
+Plug 'honza/vim-snippets'
+" Plug 'Shougo/neocomplete'
 Plug 'plasticboy/vim-markdown'
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'altercation/vim-colors-solarized'
-
 Plug 'bling/vim-airline'
-Plug 'scrooloose/nerdcommenter'
-let g:NERDSpaceDelims=1
-
-Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-surround'
 Plug 'rking/ag.vim'
-
-" Plug 'scrooloose/syntastic'
-" Plug 'gmarik/vundle'
-" Plug 'Align'
-" Plug 'msanders/snipmate.vim'
-" Plug 'slim-template/vim-slim'
-" Plug 'othree/html5.vim'
-" Plug 'VundleVim/Vundle.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+" Plug 'davidhalter/jedi-vim'
+" Plug 'nvie/vim-flake8'
 " Plug 'tpope/vim-fugitive'
-" Plug 'benmills/vimux'
-         
+Plug 'airblade/vim-gitgutter'
+
 call plug#end()
 
 set nocompatible                " Enables us Vim specific features
@@ -85,6 +78,12 @@ let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 2
 
+" nerd
+let g:NERDSpaceDelims=1
+
+" gitgutter
+let g:gitgutter_enabled = 1
+
 " 80 clumn
 " set textwidth=80
 " set wrap
@@ -115,28 +114,13 @@ highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 
 " Yank text to the OS X clipboard" 将文本复制到OS X剪贴板中
 set clipboard=unnamed
-noremap <leader>y "*y
-noremap <leader>yy "*Y
+set clipboard^=unnamed
+"noremap <leader>y "*y
+"noremap <leader>yy "*Y
   
 "  " Preserve indentation while pasting text from the OS X clipboard 在粘贴OS
 "  X剪贴板中的文本时保留缩进
-" noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
-
-
-" Enable to copy to clipboard for operations like yank, delete, change and put
-" http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
-if has('unnamedplus')
-  set clipboard^=unnamed
-  set clipboard^=unnamedplus
-endif
-
-
-" This enables us to undo files even if you exit Vim.
-if has('persistent_undo')
-  set undofile
-  set undodir=~/.config/vim/tmp/undo//
-endif
-
+noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
 
 " set mapleader
 let mapleader = ","
@@ -153,13 +137,8 @@ nmap <F2> :w<cr>
 nmap <F3> :wa<cr>
 " Close
 nmap <F4> :q<cr>
-" Format all
 nmap <F5> :NERDTreeToggle<cr>
 nmap <F8> :TagbarToggle<cr>
-
-nmap <A-up> :lprev<cr>
-nmap <A-down> :lnext<cr>
-nmap <A-right> :ll<cr>
 
 
 " Jump to next error with Ctrl-n and previous error with Ctrl-p. Close the
@@ -169,9 +148,10 @@ map <C-m> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
 nnoremap <leader>bb :CtrlPBuffer<CR>
 
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
+
 " Visual linewise up and down by default (and use gj gk to go quicker)
-noremap <Up> gk
-noremap <Down> gj
 noremap j gj
 noremap k gk
 
@@ -179,9 +159,6 @@ noremap k gk
 " search will center on the line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
-
-" Act like D and C
-nnoremap Y y$
 
 " Enter automatically into the files directory
 autocmd BufEnter * silent! lcd %:p:h
@@ -237,11 +214,11 @@ let g:go_auto_type_info = 1
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
 
-let g:go_metalinter_autosave = 1
+" let g:go_metalinter_autosave = 1
 " let g:go_metalinter_enabled = ['errcheck']
-let g:go_metalinter_autosave_enabled = ['varcheck']
+" let g:go_metalinter_autosave_enabled = ['varcheck']
 " let g:go_metalinter_autosave_enabled = ['errcheck']
-let g:go_metalinter_deadline = "30s"
+" let g:go_metalinter_deadline = "30s"
 
 
 " Open :GoDeclsDir with ctrl-g
