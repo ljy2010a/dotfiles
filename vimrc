@@ -2,7 +2,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-" Plug 'Shougo/neocomplete'
+Plug 'Shougo/neocomplete'
 Plug 'plasticboy/vim-markdown'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'altercation/vim-colors-solarized'
@@ -21,25 +21,17 @@ Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 
+if exists('$TMUX')
+  set term=screen-256color
+endif
+
 set nocompatible                " Enables us Vim specific features
 filetype off                    " Reset filetype detection first ...
 filetype plugin indent on       " ... and enable filetype detection
 syntax on
-
-if has('!nvim')
-    if exists('$TMUX')
-      set term=screen-256color
-    endif
-
-  set ttyfast                     " Indicate fast terminal conn for faster redraw
-  set ttymouse=xterm2             " Indicate terminal type for mouse codes
-  set ttyscroll=3                 " Speedup scrolling
-endif
-
-if has('nvim')
-
-endif
-
+set ttyfast                     " Indicate fast terminal conn for faster redraw
+set ttymouse=xterm2             " Indicate terminal type for mouse codes
+set ttyscroll=3                 " Speedup scrolling
 set laststatus=2                " Show status line always
 set encoding=utf-8              " Set default encoding to UTF-8
 set autoread                    " Automatically read changed files
@@ -68,21 +60,9 @@ set pumheight=10                " Completion window max size
 set nocursorcolumn              " Do not highlight column (speeds up highlighting)
 set nocursorline                " Do not highlight cursor (speeds up highlighting)
 set lazyredraw                  " Wait to redraw
-
 set mouse=a
 set wildmenu
 
-
-" neocomplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 2
-
-" nerd
-let g:NERDSpaceDelims=1
-
-" gitgutter
-let g:gitgutter_enabled = 1
 
 " 80 clumn
 " set textwidth=80
@@ -99,10 +79,6 @@ set expandtab
 set smarttab
 
 
-" markdown
-let g:vim_markdown_folding_disabled = 1
-
-
 " Colorscheme
 syntax enable
 set t_Co=256
@@ -112,18 +88,17 @@ set background=dark
 highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 
 
+" set mapleader
+let mapleader = ","
+
 " Yank text to the OS X clipboard" 将文本复制到OS X剪贴板中
 set clipboard=unnamed
 set clipboard^=unnamed
-"noremap <leader>y "*y
-"noremap <leader>yy "*Y
   
 "  " Preserve indentation while pasting text from the OS X clipboard 在粘贴OS
 "  X剪贴板中的文本时保留缩进
 noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
 
-" set mapleader
-let mapleader = ","
 
 " Navigator split window
 nmap <Up> <c-w>k
@@ -131,23 +106,22 @@ nmap <Down> <c-w>j
 nmap <Right> <c-w>l
 nmap <Left> <c-w>h
 
-" Save
+" F quick
 nmap <F2> :w<cr>
-" Save all
 nmap <F3> :wa<cr>
-" Close
 nmap <F4> :q<cr>
 nmap <F5> :NERDTreeToggle<cr>
 nmap <F8> :TagbarToggle<cr>
 
 
-" Jump to next error with Ctrl-n and previous error with Ctrl-p. Close the
-" quickfix window with <leader>a
+" Jump to next error with Ctrl-n and previous error with Ctrl-p. 
+" Close the quickfix window with <leader>a
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
 nnoremap <leader>bb :CtrlPBuffer<CR>
 
+" tab for buffer
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
@@ -160,13 +134,22 @@ noremap k gk
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" Enter automatically into the files directory
-autocmd BufEnter * silent! lcd %:p:h
+
+" neocomplete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 2
+
+" nerd
+let g:NERDSpaceDelims=1
+
+" gitgutter
+let g:gitgutter_enabled = 1
 
 
-autocmd BufRead,BufNewFile *.json set filetype=json
-autocmd FileType make set noexpandtab tabstop=4 shiftwidth=4
-autocmd FileType python set tabstop=4 shiftwidth=4
+" markdown
+let g:vim_markdown_folding_disabled = 1
+
 
 " The Silver Searcher
 let g:ackprg = 'ag --vimgrep'
@@ -193,6 +176,12 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+" Enter automatically into the files directory
+autocmd BufEnter * silent! lcd %:p:h
+
+autocmd BufRead,BufNewFile *.json set filetype=json
+autocmd FileType make set noexpandtab tabstop=4 shiftwidth=4
+autocmd FileType python set tabstop=4 shiftwidth=4
 
 " go
 let g:go_highlight_functions = 1
