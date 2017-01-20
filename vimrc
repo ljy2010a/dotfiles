@@ -8,15 +8,17 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
+" Plug 'vim-syntastic/syntastic'
+Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'rking/ag.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-" Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim'
 " Plug 'nvie/vim-flake8'
-" Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 call plug#end()
@@ -135,6 +137,17 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 
+"  PLUGIN 
+
+" jedi 
+let g:jedi#goto_command = "<leader>dd"
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
+
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
@@ -142,6 +155,7 @@ let g:neocomplete#sources#syntax#min_keyword_length = 2
 
 " nerd
 let g:NERDSpaceDelims=1
+
 
 " gitgutter
 let g:gitgutter_enabled = 1
@@ -203,25 +217,16 @@ let g:go_auto_type_info = 1
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
 
-" let g:go_metalinter_autosave = 1
-" let g:go_metalinter_enabled = ['errcheck']
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_enabled = ['errcheck']
 " let g:go_metalinter_autosave_enabled = ['varcheck']
-" let g:go_metalinter_autosave_enabled = ['errcheck']
-" let g:go_metalinter_deadline = "30s"
+let g:go_metalinter_autosave_enabled = ['govet']
+let g:go_metalinter_deadline = "30s"
 
 
 " Open :GoDeclsDir with ctrl-g
 nmap <C-g> :GoDeclsDir<cr>
 imap <C-g> <esc>:<C-u>GoDeclsDir<cr>
-
-" let g:syntastic_enable_go_checker = 1
-" let g:syntastic_auto_loc_list = 3
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_go_checkers = ['gofmt','govet', 'errcheck', 'go']
-" let g:syntastic_go_checkers = ['gofmt', 'golint', 'govet', 'errcheck']
-" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 
 augroup go
