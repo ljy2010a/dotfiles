@@ -100,6 +100,7 @@ set clipboard^=unnamed
 "  " Preserve indentation while pasting text from the OS X clipboard 在粘贴OS
 "  X剪贴板中的文本时保留缩进
 noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
+map <leader>sudo :w !sudo tee %  
 
 
 " Navigator split window
